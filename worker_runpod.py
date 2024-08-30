@@ -29,8 +29,8 @@ class ImageAdapter(nn.Module):
 		x = self.linear2(x)
 		return x
 
-CLIP_PATH = "/content/siglip"
 VLM_PROMPT = "A descriptive caption for this image:\n"
+CLIP_PATH = "/content/siglip"
 MODEL_PATH = "/content/llama"
 
 with torch.inference_mode():
