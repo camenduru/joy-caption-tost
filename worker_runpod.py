@@ -58,30 +58,30 @@ def generate(input):
 
     image = clip_processor(images=input_image, return_tensors='pt').pixel_values
     image = image.to('cuda')
-	prompt = tokenizer.encode(VLM_PROMPT, return_tensors='pt', padding=False, truncation=False, add_special_tokens=False)
-	with torch.amp.autocast_mode.autocast('cuda', enabled=True):
-		vision_outputs = clip_model(pixel_values=image, output_hidden_states=True)
-		image_features = vision_outputs.hidden_states[-2]
-		embedded_images = image_adapter(image_features)
-		embedded_images = embedded_images.to('cuda')
-	prompt_embeds = text_model.model.embed_tokens(prompt.to('cuda'))
-	embedded_bos = text_model.model.embed_tokens(torch.tensor([[tokenizer.bos_token_id]], device=text_model.device, dtype=torch.int64))
-	inputs_embeds = torch.cat([
+    prompt = tokenizer.encode(VLM_PROMPT, return_tensors='pt', padding=False, truncation=False, add_special_tokens=False)
+    with torch.amp.autocast_mode.autocast('cuda', enabled=True):
+        vision_outputs = clip_model(pixel_values=image, output_hidden_states=True)
+        image_features = vision_outputs.hidden_states[-2]
+        embedded_images = image_adapter(image_features)
+        embedded_images = embedded_images.to('cuda')
+    prompt_embeds = text_model.model.embed_tokens(prompt.to('cuda'))
+    embedded_bos = text_model.model.embed_tokens(torch.tensor([[tokenizer.bos_token_id]], device=text_model.device, dtype=torch.int64))
+    inputs_embeds = torch.cat([
 		embedded_bos.expand(embedded_images.shape[0], -1, -1),
 		embedded_images.to(dtype=embedded_bos.dtype),
 		prompt_embeds.expand(embedded_images.shape[0], -1, -1),
 	], dim=1)
-	input_ids = torch.cat([
+    input_ids = torch.cat([
 		torch.tensor([[tokenizer.bos_token_id]], dtype=torch.long),
 		torch.zeros((1, embedded_images.shape[1]), dtype=torch.long),
 		prompt,
 	], dim=1).to('cuda')
-	attention_mask = torch.ones_like(input_ids)
-	generate_ids = text_model.generate(input_ids, inputs_embeds=inputs_embeds, attention_mask=attention_mask, max_new_tokens=300, do_sample=True, top_k=10, temperature=0.5, suppress_tokens=None)
-	generate_ids = generate_ids[:, input_ids.shape[1]:]
-	if generate_ids[0][-1] == tokenizer.eos_token_id:
-		generate_ids = generate_ids[:, :-1]
-	caption = tokenizer.batch_decode(generate_ids, skip_special_tokens=False, clean_up_tokenization_spaces=False)[0]
+    attention_mask = torch.ones_like(input_ids)
+    generate_ids = text_model.generate(input_ids, inputs_embeds=inputs_embeds, attention_mask=attention_mask, max_new_tokens=300, do_sample=True, top_k=10, temperature=0.5, suppress_tokens=None)
+    generate_ids = generate_ids[:, input_ids.shape[1]:]
+    if generate_ids[0][-1] == tokenizer.eos_token_id:
+        generate_ids = generate_ids[:, :-1]
+    caption = tokenizer.batch_decode(generate_ids, skip_special_tokens=False, clean_up_tokenization_spaces=False)[0]
 
     with tempfile.NamedTemporaryFile(delete=False, suffix=".txt") as temp_file:
         file_path = temp_file.name
