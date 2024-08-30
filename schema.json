@@ -1,0 +1,31 @@
+{
+    "$schema": "http://json-schema.org/draft-04/hyper-schema#",
+    "type": "object",
+    "properties": {
+      "readme": {
+        "type": "string",
+        "title": "Joy Caption",
+        "author": "Meta LLAMA Team, Google Research Big Vision Team",
+        "page": "https://llama.meta.com/",
+        "paper": "https://arxiv.org/abs/2303.15343",
+        "code": "https://github.com/google-research/big_vision",
+        "jupyter": "https://github.com/camenduru/joy-caption-jupyter",
+        "api": "https://github.com/camenduru/tost-api-examples/blob/main/v1/joy-caption.ipynb",
+        "tags": [
+          "Vision to Image"
+        ],
+        "widget": "readme"
+      },
+      "input_image_url": {
+        "type": "string",
+        "description": "Input Image URL",
+        "widget": "textarea"
+      }
+    },
+    "buttons": [
+      {
+        "id": "enter",
+        "label": "🥪 Enter"
+      }
+    ]
+  }

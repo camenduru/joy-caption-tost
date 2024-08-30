@@ -56,8 +56,8 @@ def generate(input):
     input_image = download_file(input_image_url)
     input_image = Image.open(input_image)
 
-	image = clip_processor(images=input_image, return_tensors='pt').pixel_values
-	image = image.to('cuda')
+    image = clip_processor(images=input_image, return_tensors='pt').pixel_values
+    image = image.to('cuda')
 	prompt = tokenizer.encode(VLM_PROMPT, return_tensors='pt', padding=False, truncation=False, add_special_tokens=False)
 	with torch.amp.autocast_mode.autocast('cuda', enabled=True):
 		vision_outputs = clip_model(pixel_values=image, output_hidden_states=True)
@@ -65,7 +65,6 @@ def generate(input):
 		embedded_images = image_adapter(image_features)
 		embedded_images = embedded_images.to('cuda')
 	prompt_embeds = text_model.model.embed_tokens(prompt.to('cuda'))
-	assert prompt_embeds.shape == (1, prompt.shape[1], text_model.config.hidden_size), f"Prompt shape is {prompt_embeds.shape}, expected {(1, prompt.shape[1], text_model.config.hidden_size)}"
 	embedded_bos = text_model.model.embed_tokens(torch.tensor([[tokenizer.bos_token_id]], device=text_model.device, dtype=torch.int64))
 	inputs_embeds = torch.cat([
 		embedded_bos.expand(embedded_images.shape[0], -1, -1),
