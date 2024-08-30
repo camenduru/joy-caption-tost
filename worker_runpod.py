@@ -85,7 +85,7 @@ def generate(input):
 
     with tempfile.NamedTemporaryFile(delete=False, suffix=".txt") as temp_file:
         file_path = temp_file.name
-        temp_file.write(caption.strip())
+        temp_file.write(caption.strip().encode('utf-8'))
 
     result = file_path
     try:
