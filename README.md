@@ -16,7 +16,7 @@ https://arxiv.org/abs/2303.15343
 https://llama.meta.com/
 
 ### 🖼 Output
-![image](https://github.com/user-attachments/assets/f12f3aa3-0bfa-4862-8216-fec23cdecaff)
+
 
 ### 🏢 Sponsor
 https://runpod.io
