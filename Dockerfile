@@ -14,7 +14,7 @@ RUN adduser --disabled-password --gecos '' camenduru && \
 USER camenduru
 
 RUN pip install -q torch==2.4.0+cu121 torchvision==0.19.0+cu121 torchaudio==2.4.0+cu121 torchtext==0.18.0 torchdata==0.8.0 --extra-index-url https://download.pytorch.org/whl/cu121 \
-    transformers==4.44.2 bitsandbytes==0.43.3 sentencepiece==0.2.0 protobuf==5.28.0 runpod && \
+    transformers==4.44.2 accelerate==0.33.0 bitsandbytes==0.43.3 sentencepiece==0.2.0 protobuf==5.28.0 runpod && \
     aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/joy-caption/raw/main/llama/config.json -d /content/llama -o config.json && \
     aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/joy-caption/raw/main/llama/generation_config.json -d /content/llama -o generation_config.json && \
     aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/joy-caption/resolve/main/llama/model-00001-of-00004.safetensors -d /content/llama -o model-00001-of-00004.safetensors && \
@@ -31,8 +31,8 @@ RUN pip install -q torch==2.4.0+cu121 torchvision==0.19.0+cu121 torchaudio==2.4.
     aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/joy-caption/raw/main/siglip/special_tokens_map.json -d /content/siglip -o special_tokens_map.json && \
     aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/joy-caption/resolve/main/siglip/spiece.model -d /content/siglip -o spiece.model && \
     aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/joy-caption/raw/main/siglip/tokenizer_config.json -d /content/siglip -o tokenizer_config.json && \
-    aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/joy-caption/raw/main/adapter/config.yaml -d /content/adapter -o tokenizer_config.json && \
-    aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/joy-caption/resolve/main/adapter/image_adapter.pt -d /content/adapter -o tokenizer_config.json
+    aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/joy-caption/raw/main/adapter/config.yaml -d /content/adapter -o config.yaml && \
+    aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/camenduru/joy-caption/resolve/main/adapter/image_adapter.pt -d /content/adapter -o image_adapter.pt
 
 COPY ./worker_runpod.py /content/worker_runpod.py
 WORKDIR /content
