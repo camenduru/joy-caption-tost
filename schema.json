@@ -20,6 +20,23 @@
         "type": "string",
         "description": "Input Image URL",
         "widget": "textarea"
+      },
+      "vlm_prompt": {
+        "type": "string",
+        "description": "Prompt",
+        "widget": "textarea"
+      },
+      "max_new_tokens": {
+        "type": "integer",
+        "description": "Max New Tokens"
+      },
+      "top_k": {
+        "type": "number",
+        "description": "Top K"
+      },
+      "temperature": {
+        "type": "number",
+        "description": "Temperature"
       }
     },
     "buttons": [
