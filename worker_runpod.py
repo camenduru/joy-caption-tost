@@ -29,7 +29,6 @@ class ImageAdapter(nn.Module):
 		x = self.linear2(x)
 		return x
 
-VLM_PROMPT = "A descriptive caption for this image:\n"
 CLIP_PATH = "/content/siglip"
 MODEL_PATH = "/content/llama"
 
@@ -53,12 +52,16 @@ def generate(input):
     values = input["input"]
 
     input_image_url = values['input_image_url']
+    vlm_prompt = values['vlm_prompt']
+    max_new_tokens = values['max_new_tokens']
+    top_k = values['top_k']
+    temperature = values['temperature']
     input_image = download_file(input_image_url)
     input_image = Image.open(input_image)
 
     image = clip_processor(images=input_image, return_tensors='pt').pixel_values
     image = image.to('cuda')
-    prompt = tokenizer.encode(VLM_PROMPT, return_tensors='pt', padding=False, truncation=False, add_special_tokens=False)
+    prompt = tokenizer.encode(vlm_prompt, return_tensors='pt', padding=False, truncation=False, add_special_tokens=False)
     with torch.amp.autocast_mode.autocast('cuda', enabled=True):
         vision_outputs = clip_model(pixel_values=image, output_hidden_states=True)
         image_features = vision_outputs.hidden_states[-2]
@@ -77,7 +80,7 @@ def generate(input):
 		prompt,
 	], dim=1).to('cuda')
     attention_mask = torch.ones_like(input_ids)
-    generate_ids = text_model.generate(input_ids, inputs_embeds=inputs_embeds, attention_mask=attention_mask, max_new_tokens=300, do_sample=True, top_k=10, temperature=0.5, suppress_tokens=None)
+    generate_ids = text_model.generate(input_ids, inputs_embeds=inputs_embeds, attention_mask=attention_mask, max_new_tokens=max_new_tokens, do_sample=True, top_k=top_k, temperature=temperature, suppress_tokens=None)
     generate_ids = generate_ids[:, input_ids.shape[1]:]
     if generate_ids[0][-1] == tokenizer.eos_token_id:
         generate_ids = generate_ids[:, :-1]
