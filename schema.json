@@ -37,6 +37,14 @@
       "temperature": {
         "type": "number",
         "description": "Temperature"
+      },
+      "example": {
+        "type": "string",
+        "image1": "https://fakeimg.pl/1309x1742/282828/eae0d0/?text=input#.png",
+        "image2": "https://files.catbox.moe/qqwj5f.jpg",
+        "image3": "https://fakeimg.pl/1309x1742/282828/eae0d0/?text=output#.png",
+        "image4": "https://files.catbox.moe/2xl1kw.png",
+        "widget": "example"
       }
     },
     "buttons": [
