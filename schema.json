@@ -1,56 +1,62 @@
 {
-    "$schema": "http://json-schema.org/draft-04/hyper-schema#",
-    "type": "object",
-    "properties": {
-      "readme": {
-        "type": "string",
-        "title": "Joy Caption",
-        "author": "Meta LLAMA Team, Google Research Big Vision Team",
-        "page": "https://llama.meta.com/",
-        "paper": "https://arxiv.org/abs/2303.15343",
-        "code": "https://github.com/google-research/big_vision",
-        "jupyter": "https://github.com/camenduru/joy-caption-jupyter",
-        "api": "https://github.com/camenduru/tost-api-examples/blob/main/v1/joy-caption.ipynb",
-        "tags": [
-          "Image to Text"
-        ],
-        "widget": "readme"
-      },
-      "input_image_url": {
-        "type": "string",
-        "description": "Input Image URL",
-        "widget": "textarea"
-      },
-      "vlm_prompt": {
-        "type": "string",
-        "description": "Prompt",
-        "widget": "textarea"
-      },
-      "max_new_tokens": {
-        "type": "integer",
-        "description": "Max New Tokens"
-      },
-      "top_k": {
-        "type": "number",
-        "description": "Top K"
-      },
-      "temperature": {
-        "type": "number",
-        "description": "Temperature"
-      },
-      "example": {
-        "type": "string",
-        "image1": "https://fakeimg.pl/1309x1742/282828/eae0d0/?text=input#.png",
-        "image2": "https://files.catbox.moe/qqwj5f.jpg",
-        "image3": "https://fakeimg.pl/1309x1742/282828/eae0d0/?text=output#.png",
-        "image4": "https://files.catbox.moe/2xl1kw.png",
-        "widget": "example"
-      }
+  "$schema": "http://json-schema.org/draft-04/hyper-schema#",
+  "type": "object",
+  "properties": {
+    "readme": {
+      "type": "string",
+      "title": "Joy Caption",
+      "author": "Meta LLAMA Team, Google Research Big Vision Team",
+      "page": "https://llama.meta.com/",
+      "paper": "https://arxiv.org/abs/2303.15343",
+      "code": "https://github.com/google-research/big_vision",
+      "jupyter": "https://github.com/camenduru/joy-caption-jupyter",
+      "api": "https://github.com/camenduru/tost-api-examples/blob/main/v1/joy-caption.ipynb",
+      "tags": [
+        "Image to Text"
+      ],
+      "widget": "readme"
     },
-    "buttons": [
-      {
-        "id": "enter",
-        "label": "🥪 Enter"
-      }
-    ]
-  }
+    "upload": {
+      "type": "string",
+      "widget": "upload",
+      "upload_url": "https://litterbox.catbox.moe/resources/internals/api.php",
+      "property": "input_image_url"
+    },
+    "input_image_url": {
+      "type": "string",
+      "description": "Input Image URL",
+      "widget": "textarea"
+    },
+    "vlm_prompt": {
+      "type": "string",
+      "description": "Prompt",
+      "widget": "textarea"
+    },
+    "max_new_tokens": {
+      "type": "integer",
+      "description": "Max New Tokens"
+    },
+    "top_k": {
+      "type": "number",
+      "description": "Top K"
+    },
+    "temperature": {
+      "type": "number",
+      "description": "Temperature"
+    },
+    "example": {
+      "type": "string",
+      "image1": "https://fakeimg.pl/1309x1742/282828/eae0d0/?text=input#.png",
+      "image2": "https://files.catbox.moe/qqwj5f.jpg",
+      "image3": "https://fakeimg.pl/1309x1742/282828/eae0d0/?text=output#.png",
+      "image4": "https://files.catbox.moe/2xl1kw.png",
+      "widget": "example"
+    }
+  },
+  "buttons": [
+    {
+      "id": "enter",
+      "label": "🥪 Enter"
+    }
+  ]
+}
