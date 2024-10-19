@@ -19,4 +19,4 @@ https://llama.meta.com/
 
 
 ### 🏢 Sponsor
-https://runpod.io
+[https://runpod.io](https://runpod.io?ref=iqi9iy8y)
